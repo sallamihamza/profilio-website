@@ -1,6 +1,6 @@
 import { Resend } from 'resend';
 
-const resend = new Resend('re_HHknqF64_CNLp2MfFCufvgHN9koTUK8PE');
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 export default async function handler(req, res) {
   // Handle OPTIONS preflight request
@@ -26,7 +26,7 @@ export default async function handler(req, res) {
   console.log('MAIL_RECEIVER:', process.env.MAIL_RECEIVER);
   try {
     await resend.emails.send({
-      from: 'aslamihamza@gmail.com',
+      from: process.env.MAIL_USER,
       to: process.env.MAIL_RECEIVER,
       subject: `New message from ${name}`,
       html: `<p><b>Name:</b> ${name}</p><p><b>Email:</b> ${email}</p><p>${message}</p>`,
