@@ -23,7 +23,7 @@ export default async function handler(req, res) {
   if (!name || !email || !message) {
     return res.status(400).json({ message: 'Missing fields' });
   }
-
+  console.log('MAIL_RECEIVER:', process.env.MAIL_RECEIVER);
   try {
     await resend.emails.send({
       from: 'aslamihamza@gmail.com',
