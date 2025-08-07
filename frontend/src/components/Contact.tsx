@@ -20,15 +20,19 @@ const Contact: React.FC = () => {
 const handleSubmit = async (e: React.FormEvent) => {
   e.preventDefault();
 
-  try { const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/contact`, {
+  const endpoint =
+    import.meta.env.PROD
+      ? 'https://profilio-website-nine.vercel.app/api/contact'
+      : '/api/contact';
+
+  try {
+    const response = await fetch(endpoint, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(formData),
     });
 
-    const result = await response.json();
-
-    if (result.success) {
+    if (response.ok) {
       setIsSubmitted(true);
       setTimeout(() => {
         setIsSubmitted(false);
@@ -38,9 +42,11 @@ const handleSubmit = async (e: React.FormEvent) => {
       alert('Failed to send message');
     }
   } catch (error) {
+    console.error('Submit error:', error);
     alert('Server error');
   }
 };
+
 
   const contactInfo = [
     {
