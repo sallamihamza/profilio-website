@@ -17,10 +17,10 @@ const Contact: React.FC = () => {
     });
   };
 
-const handleSubmit = async (e: React.FormEvent) => {
+const handleSubmit = async (e) => {
   e.preventDefault();
 
-  try { const response = await fetch('/api/contact', {
+  try { const response = await fetch(`/api/contact`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(formData),
@@ -29,11 +29,8 @@ const handleSubmit = async (e: React.FormEvent) => {
     const result = await response.json();
 
     if (result.success) {
-      setIsSubmitted(true);
-      setTimeout(() => {
-        setIsSubmitted(false);
-        setFormData({ name: '', email: '', message: '' });
-      }, 4000);
+      alert('Message sent!');
+      setFormData({ name: '', email: '', message: '' });
     } else {
       alert('Failed to send message');
     }
@@ -156,7 +153,7 @@ const handleSubmit = async (e: React.FormEvent) => {
                     transition={{ duration: 0.6, delay: index * 0.1 }}
                     viewport={{ once: true }}
                     whileHover={{ scale: 1.1, y: -5 }}
-                    className={p-4 bg-white dark:bg-gray-800 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 ${social.color}}
+                    className={`p-4 bg-white dark:bg-gray-800 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 ${social.color}`}
                   >
                     {social.icon}
                   </motion.a>
