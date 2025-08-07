@@ -28,6 +28,7 @@ export default async function handler(req, res) {
     await resend.emails.send({
       from: process.env.MAIL_USER,
       to: process.env.MAIL_RECEIVER,
+      replyTo: email,
       subject: `New message from ${name}`,
       html: `<p><b>Name:</b> ${name}</p><p><b>Email:</b> ${email}</p><p>${message}</p>`,
     });
