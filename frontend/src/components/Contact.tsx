@@ -17,43 +17,30 @@ const Contact: React.FC = () => {
     });
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
 
-    // Use your production URL only in production, otherwise use relative path
-    const endpoint =
-      import.meta.env.PROD
-        ? 'https://profilio-k6k8t17gb-hamzas-projects-fee8c477.vercel.app/api/contact'
-        : '/api/contact';
+  try { const response = await fetch(${import.meta.env.VITE_BACKEND_URL}/api/contact, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(formData),
+    });
 
-    // Basic email validation regex
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(formData.email)) {
-      alert('Please enter a valid email address');
-      return;
+    const result = await response.json();
+
+    if (result.success) {
+      setIsSubmitted(true);
+      setTimeout(() => {
+        setIsSubmitted(false);
+        setFormData({ name: '', email: '', message: '' });
+      }, 4000);
+    } else {
+      alert('Failed to send message');
     }
-
-    try {
-      const response = await fetch(endpoint, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
-      });
-
-      if (response.ok) {
-        setIsSubmitted(true);
-        setTimeout(() => {
-          setIsSubmitted(false);
-          setFormData({ name: '', email: '', message: '' });
-        }, 4000);
-      } else {
-        alert('Failed to send message');
-      }
-    } catch (error) {
-      console.error('Submit error:', error);
-      alert('Server error');
-    }
-  };
+  } catch (error) {
+    alert('Server error');
+  }
+};
 
   const contactInfo = [
     {
@@ -169,7 +156,7 @@ const Contact: React.FC = () => {
                     transition={{ duration: 0.6, delay: index * 0.1 }}
                     viewport={{ once: true }}
                     whileHover={{ scale: 1.1, y: -5 }}
-                    className={`p-4 bg-white dark:bg-gray-800 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 ${social.color}`}
+                    className={p-4 bg-white dark:bg-gray-800 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 ${social.color}}
                   >
                     {social.icon}
                   </motion.a>
