@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Mail, Phone, MapPin, Send, Github, Linkedin, CheckCircle } from 'lucide-react';
 
-const Contact: React.FC = () => {
+const Contact = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -10,34 +10,23 @@ const Contact: React.FC = () => {
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
     });
   };
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
-
-  try { const response = await fetch(`/api/contact`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(formData),
-    });
-
-    const result = await response.json();
-
-    if (result.success) {
-      alert('Message sent!');
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Simulate form submission
+    console.log('Form submitted:', formData);
+    setIsSubmitted(true);
+    setTimeout(() => {
+      setIsSubmitted(false);
       setFormData({ name: '', email: '', message: '' });
-    } else {
-      alert('Failed to send message');
-    }
-  } catch (error) {
-    alert('Server error');
-  }
-};
+    }, 3000);
+  };
 
   const contactInfo = [
     {
