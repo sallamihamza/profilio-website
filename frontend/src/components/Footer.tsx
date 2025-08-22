@@ -115,9 +115,6 @@ const Footer: React.FC = () => {
               © {currentYear} Hamza Sallemi. Made with 
               <Heart className="w-4 h-4 text-red-500" fill="currentColor" />.
             </p>
-            <p className="mt-2">
-              All rights reserved. Built with React & Tailwind CSS.
-            </p>
           </motion.div>
         </div>
       </div>
