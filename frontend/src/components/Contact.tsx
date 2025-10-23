@@ -10,35 +10,42 @@ const Contact = () => {
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
     });
   };
 
-const handleSubmit = async (e: React.FormEvent) => {
+const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
   e.preventDefault();
+  // Read backend base URL from Vite env var; fall back to localhost:5000 for dev
+  const API_BASE = (import.meta as any).env?.VITE_API_URL || 'http://localhost:5000';
 
-  try { const response = await fetch('/api/contact', {
+  try {
+    const response = await fetch(`${API_BASE}/api/contact`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(formData),
     });
 
-    const result = await response.json();
+    const result = await response.json().catch(() => ({}));
 
-    if (result.success) {
+    if (response.ok && result.success) {
       setIsSubmitted(true);
       setTimeout(() => {
         setIsSubmitted(false);
         setFormData({ name: '', email: '', message: '' });
       }, 4000);
     } else {
-      alert('Failed to send message');
+      const msg = result?.message || `Server responded with status ${response.status}`;
+      // Better than alert: use console and alert for visibility
+      console.error('Contact send failed:', msg);
+      alert('Failed to send message: ' + msg);
     }
-  } catch (error) {
-    alert('Server error');
+  } catch (error: any) {
+    console.error('Network or server error:', error);
+    alert('Network or server error: ' + (error?.message || String(error)));
   }
 };
 
