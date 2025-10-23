@@ -20,7 +20,7 @@ const Contact = () => {
 const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
   e.preventDefault();
   // Read backend base URL from Vite env var; fall back to localhost:5000 for dev
-  const API_BASE = (import.meta as any).env?.VITE_API_URL || 'http://localhost:5000';
+  const API_BASE = (import.meta as any).env?.VITE_API_URL || 'https://profilio-website.onrender.com/';
 
   try {
     const response = await fetch(`${API_BASE}/api/contact`, {
