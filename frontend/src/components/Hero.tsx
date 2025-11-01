@@ -118,7 +118,7 @@ const Hero: React.FC = () => {
               className="btn-primary flex items-center gap-2 bg-orange-600 hover:bg-orange-700 dark:bg-orange-700 dark:hover:bg-orange-600"
             >
               <img 
-                src="/vite.svg"
+                src="/super-mario.svg"
                 alt="Play Game" 
                 className="w-5 h-5 object-contain" 
               />
