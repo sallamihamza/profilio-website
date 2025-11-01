@@ -1,7 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Download, Mail, Eye, Github, Linkedin } from 'lucide-react';
-
 const Hero: React.FC = () => {
   const scrollToSection = (href: string) => {
     const element = document.querySelector(href);
@@ -110,6 +109,21 @@ const Hero: React.FC = () => {
               <Mail size={20} />
               Contact Me
             </motion.button>
+
+            {/* Bouton Play 2D Game avec l'image Mario */}
+            <motion.a
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              href="https://2d-profolio.vercel.app/"
+              className="btn-primary flex items-center gap-2 bg-orange-600 hover:bg-orange-700 dark:bg-orange-700 dark:hover:bg-orange-600"
+            >
+              <img 
+                src="/vite.svg"
+                alt="Play Game" 
+                className="w-5 h-5 object-contain" 
+              />
+              Play 2D Game
+            </motion.a>
           </motion.div>
 
           <motion.div
